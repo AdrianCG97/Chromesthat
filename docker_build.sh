@@ -1,1 +1,1 @@
-docker build -t your-cpp-app .
+docker build -t chromesthat .

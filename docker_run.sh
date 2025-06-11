@@ -1,1 +1,1 @@
-docker run --rm -it --device /dev/snd your-cpp-app
+docker run --rm -it --device /dev/snd chromesthat

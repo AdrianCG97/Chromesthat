@@ -8,16 +8,30 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     git \
+    vim \
+    wget \
+    pkg-config \
     libasound2-dev \
+    libfftw3-dev \
     # Add other dependencies if needed, e.g., libjack-jackd2-dev or libpulse-dev
     && rm -rf /var/lib/apt/lists/*
 
 # Clone and build RtAudio
 # You can pin to a specific RtAudio version by checking out a tag
-RUN git clone https://github.com/thestk/rtaudio.git /app/rtaudio_src
-WORKDIR /app/rtaudio_src/build
+RUN git clone https://github.com/thestk/rtaudio.git /app/externals/rtaudio_src
+WORKDIR /app/externals/rtaudio_src/build
 RUN cmake .. -DRTAUDIO_API_ALSA=ON && \
     make -j $(nproc) && \ 
+    make install
+
+# Clone and build FFTW
+WORKDIR /app/externals/fftw_src/
+ENV FFTW_VERSION=3.3.10
+RUN wget http://www.fftw.org/fftw-${FFTW_VERSION}.tar.gz
+RUN tar -xzf fftw-${FFTW_VERSION}.tar.gz && \
+    cd fftw-${FFTW_VERSION} && \
+    ./configure --enable-shared && \
+    make -j$(nproc) && \
     make install
 
 # Go back to the main app directory
