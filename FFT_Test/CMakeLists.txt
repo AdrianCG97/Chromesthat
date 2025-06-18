@@ -10,7 +10,8 @@ include_directories(PkgConfig::FFTW)
 link_libraries(PkgConfig::FFTW)
 
 
-# add_executable(FFT_Test fft_test.cpp)
+add_executable(FFT_Test fft_test.cpp)
+add_executable(FFT_Real fft_real_test.cpp)
 
 # # INCLUDE CMATH
 # find_library(MATH_LIBRARY m)

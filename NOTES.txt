@@ -1,0 +1,36 @@
+///////////////////
+//     FFTW      //
+///////////////////
+
+* if your program performs many transforms of the same size and initialization time is not important, use FFTW_MEASURE; otherwise use the estimate. 
+    Once the plan has been created, you can use it as many times as you like for transforms on arrays of the same size. 
+    When you are done with the plan, you deallocate it by calling fftw_destroy_plan(plan).
+
+*The transform itself is computed by passing the plan along with the input and output arrays to fftw_one:
+
+    void fftw_one(fftw_plan plan, fftw_complex *in, fftw_complex *out);
+
+    The DFT results are stored in-order in the array out, with the zero-frequency (DC) component in out[0].
+
+* rfftw transforms, which are FFTs specialized for real data.
+
+
+For Real One dimensional transform
+
+    rfftw_plan rfftw_create_plan(int n, fftw_direction dir, int flags);
+
+    rfftw_one(rfftw_plan plan, fftw_real *in, fftw_real *out);
+
+
+
+FIND MAGNITUDE AT 261HZ (Middle C)
+
+SAMPLE_RATE = 44100
+N = 10000
+
+Find index
+k = (round(target_frequency * N / sample_rate))
+
+k = (261 * 10000 / 44100) = 59
+
+MAX at k = 60
