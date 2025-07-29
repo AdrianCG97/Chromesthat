@@ -12,7 +12,7 @@ RtAudio adc;
 bool keepRunning = true;
 volatile int new_data = 0;
 std::mutex buffer_mutex;
-std::vector<float> buffer(512);
+std::vector<float> buffer(2048);
 
 
 // Ctrl+C signal handler
@@ -103,8 +103,8 @@ int main() {
     parameters.nChannels = 1;        // We'll ask for 1 channel (mono)
     parameters.firstChannel = 0;     // Start with the first channel on the device
 
-    unsigned int sampleRate = 44100; // Common sample rate
-    unsigned int bufferFrames = 512; // Number of frames per buffer (chunk size)
+    unsigned int sampleRate   = 44100; // Common sample rate
+    unsigned int bufferFrames = 2048; // Number of frames per buffer (chunk size)
                                      // Smaller = lower latency, higher CPU
                                      // Larger = higher latency, lower CPU
 

@@ -6,13 +6,20 @@
 #include <iomanip>
 
 
-#define N               10000
-#define SAMPLE_RATE     44100
+#define N               2048
+#define SAMPLE_RATE     16384
 
-int main(){
+int main(int argc, char* argv[]){
 
     // Open file
-    std::ifstream inputFile("floats_binary.txt");
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <file_path>" << std::endl;
+        return 1; // Indicate an error
+    }
+
+    std::string filePath = argv[1];
+
+    std::ifstream inputFile(filePath);
 
     if (!inputFile.is_open()) {
        std::cerr << "Error opening file." << std::endl;
@@ -85,7 +92,7 @@ int main(){
     fftw_execute(plan);
 
     // Creata file to store data
-    const char* filename = "magnitude.txt";
+    std::string filename = "magnitude" + filePath;
     std::ofstream outfile(filename);
 
     if (!outfile.is_open()) {
